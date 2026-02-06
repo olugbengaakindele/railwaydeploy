@@ -9,7 +9,9 @@ DEBUG = False
 LOGGING = {}
 LOGGING_CONFIG = None
 
-os.environ.get("SECRET_KEY", "")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY is missing on Railway")
 
 ALLOWED_HOSTS =  ["*"]
 # raw_hosts = os.environ.get("ALLOWED_HOSTS", "")
