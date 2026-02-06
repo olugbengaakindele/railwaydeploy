@@ -30,4 +30,5 @@ local_settings.py
 /media
 venv
 /static
+run one time.sql
 runtime.txt
