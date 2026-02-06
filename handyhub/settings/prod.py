@@ -11,11 +11,15 @@ LOGGING_CONFIG = None
 
 os.environ.get("SECRET_KEY", "")
 
+raw_hosts = os.environ.get("ALLOWED_HOSTS", "")
+print("RAW ALLOWED_HOSTS =", repr(raw_hosts))
+
 ALLOWED_HOSTS = [
     h.strip()
-    for h in os.environ.get("ALLOWED_HOSTS", "").split(",")
+    for h in raw_hosts.split(",")
     if h.strip()
 ]
+
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if os.environ.get("CSRF_TRUSTED_ORIGINS") else []
 
 # ✅ Production database (start simple with SQLite for staging if you want)
