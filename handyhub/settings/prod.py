@@ -5,7 +5,11 @@ import dj_database_url
 
 DEBUG = False
 
-SECRET_KEY = os.environ["SECRET_KEY"]
+
+LOGGING = {}
+LOGGING_CONFIG = None
+
+os.environ.get("SECRET_KEY", "")
 
 ALLOWED_HOSTS = [
     h.strip()
@@ -39,7 +43,7 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-    
+
 # Security (enable when you're behind HTTPS)
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
