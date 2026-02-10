@@ -19,7 +19,7 @@ ALLOWED_HOSTS =  ["*"]
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if os.environ.get("CSRF_TRUSTED_ORIGINS") else []
 
-if DB_LIVE not in ["False", False]:
+if DB_LIVE in ["False", False]:
     
     DATABASE = {
         'default' : {
