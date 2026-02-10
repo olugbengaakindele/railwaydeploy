@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 DEBUG = False
-
+DB_LIVE = os.environ.get("DB_LIVE")
 
 LOGGING = {}
 LOGGING_CONFIG = None
