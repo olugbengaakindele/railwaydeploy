@@ -19,25 +19,32 @@ ALLOWED_HOSTS =  ["*"]
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if os.environ.get("CSRF_TRUSTED_ORIGINS") else []
 
-if DB_LIVE in ["False", False]:
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ["DATABASE_URL"],
+        conn_max_age=600,
+        ssl_require=True,
+    )
+}
+# if DB_LIVE in ["False", False]:
     
-    DATABASES = {
-        'default' : {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME' : os.environ.get("DB_NAME"),
-            'USER' : os.environ.get("DB_USER"),
-            'PASSWORD' : os.environ.get("DB_PASSWORD"),
-            'HOST' : os.environ.get("DB_HOST"),
-            'PORT':  os.environ.get("DB_PORT"),
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE' :'django.db.backends.sqlite3' ,
-            'NAME' : BASE_DIR / 'db.sqlite3' ,
-        }
-    }
+#     DATABASES = {
+#         'default' : {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME' : os.environ.get("DB_NAME"),
+#             'USER' : os.environ.get("DB_USER"),
+#             'PASSWORD' : os.environ.get("DB_PASSWORD"),
+#             'HOST' : os.environ.get("DB_HOST"),
+#             'PORT':  os.environ.get("DB_PORT"),
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE' :'django.db.backends.sqlite3' ,
+#             'NAME' : BASE_DIR / 'db.sqlite3' ,
+#         }
+#     }
 
 # Security (enable when you're behind HTTPS)
 SECURE_SSL_REDIRECT = True
