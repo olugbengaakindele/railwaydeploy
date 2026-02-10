@@ -2,6 +2,8 @@ from .base import *
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
 
 DEBUG = False
 
@@ -25,29 +27,23 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if os.environ.get("CSRF_TRUSTED_ORIGINS") else []
 
-# ✅ Production database (start simple with SQLite for staging if you want)
-# # Option A (staging quick): SQLite
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
+if DB_LIVE not in ["False", False]:
+    
+    DATABASE = {
+        'default' : {
+            'ENGINE': 'django.db.backends.pstgresql',
+            'NAME' : os.getenv("DB_NAME"),
+            'USER' : os.getenv("DB_USER"),
+            'PASSWORD' : os.getenv("DB_PASSWORD"),
+            'HOST' : os.getenv("DB_HOST"),
+            'PORT':  os.getenv("DB_PORT"),
+        }
     }
 else:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+        'default': {
+            'ENGINE' :'django.db.backends.sqlite3' ,
+            'NAME' : BASE_DIR / 'db.sqlite3' ,
         }
     }
 
@@ -68,6 +64,7 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "LocalTradePros <norep
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware" ,
 
     "django.contrib.sessions.middleware.SessionMiddleware",   # ✅ must be before auth
     "django.middleware.common.CommonMiddleware",
