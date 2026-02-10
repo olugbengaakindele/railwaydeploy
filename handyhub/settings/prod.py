@@ -21,7 +21,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if 
 
 if DB_LIVE in ["False", False]:
     
-    DATABASE = {
+    DATABASES = {
         'default' : {
             'ENGINE': 'django.db.backends.pstgresql',
             'NAME' : os.environ.get("DB_NAME"),
