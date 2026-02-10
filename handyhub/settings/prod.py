@@ -15,15 +15,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     raise RuntimeError("SECRET_KEY is missing on Railway")
 
-# ALLOWED_HOSTS =  ["*"]
-raw_hosts = os.environ.get("ALLOWED_HOSTS", "")
-print("RAW ALLOWED_HOSTS =", repr(raw_hosts))
-
-ALLOWED_HOSTS = [
-    h.strip()
-    for h in raw_hosts.split(",")
-    if h.strip()
-]
+ALLOWED_HOSTS =  ["*"]
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if os.environ.get("CSRF_TRUSTED_ORIGINS") else []
 
